@@ -140,9 +140,17 @@ type ExpectedType =
 
 📝 **Explanation**:
 
-* The function `multiply` is extracted and run with `3` and `4`.
-* Expected output is `12`.
-* The API returns pass/fail and the actual result.
+* The user submits a simple addNumbers(a, b) function that returns the sum of two values.
+* Three test cases are defined:
+   * Adding 2 and 3, expecting 5
+   * Adding -1 and 1, expecting 0
+   * Adding 0 and 0, expecting 0
+
+* Each argument value is passed as a string along with its type (number), which the backend parses correctly before invoking the function.
+* The function is parsed and auto-exported by the backend.
+* The function is executed in a sandbox using Node’s VM and Babel.
+* Each output is compared to the expected result using JSON.stringify() equality checks.
+
 
 ### ✅ Response
 
