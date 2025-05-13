@@ -144,33 +144,76 @@ Evaluates a submitted React component by rendering it with given props and check
 ### 📥 Request Body
 
 ```ts
-interface ReactTestSuite {
-  code: string;
-  tests: {
-    tests: TestCase[];
+export interface TagValidation {
+    tag: string;
+    expectedToPass?: boolean; // defaults to true if omitted
+}
+
+export interface TextValidation {
+    text: string;
+    expectedToPass?: boolean; // defaults to true if omitted
+}
+
+export interface PropTypeValidation {
+    name: string;
+    type: 'string' | 'number' | 'boolean' | 'object' | 'undefined' | 'function';
+}
+
+export interface TestValidations {
+    tags?: (string | TagValidation)[];
+    includesText?: (string | TextValidation)[];
+}
+
+export interface GlobalValidations extends TestValidations {
+    props?: PropTypeValidation[];
+}
+
+export interface TestCase {
+    props: Record<string, any>;
+    validations?: TestValidations;
+}
+
+export interface ReactTestSuite {
+    title: string;
+    testCases: TestCase[];
     validations?: GlobalValidations;
-  };
 }
 ```
 
 ### 📄 Example Request
 
 ```json
+
 {
-  "code": "export default function Greet({ name }) { return <p>Hello {name}!</p>; }",
+  "code": "import React from 'react';\n\nexport default function ConditionalMessage({ show }) {\n  return (\n    <div>\n      {show && <p>You can see me!</p>}\n    </div>\n  );\n}",
   "tests": {
     "tests": [
       {
-        "props": { "name": "Brad" },
+        "props": { "show": true },
         "validations": {
-          "includesText": ["Hello Brad!"]
+          "tags": [
+            { "tag": "p", "expectedToPass": true }
+          ],
+          "includesText": [
+            { "text": "You can see me!", "expectedToPass": true }
+          ]
+        }
+      },
+      {
+        "props": { "show": false },
+        "validations": {
+          "tags": [
+            { "tag": "p", "expectedToPass": false }
+          ],
+          "includesText": [
+            { "text": "You can see me!", "expectedToPass": false }
+          ]
         }
       }
     ],
     "validations": {
-      "tags": ["p"],
       "props": [
-        { "name": "name", "type": "string" }
+        { "name": "show", "type": "boolean" }
       ]
     }
   }
@@ -187,36 +230,73 @@ interface ReactTestSuite {
 ### ✅ Response
 
 ```ts
-interface ReactTestResult {
-  props: Record<string, any>;
-  html: string;
-  validations: {
-    type: "tag" | "text" | "propType";
-    passed: boolean;
-    [key: string]: any;
-  }[];
-  passed: boolean;
+{
+  "success": true,
+  "message": "",
+  "results": [
+    {
+      "props": { "show": true },
+      "html": "<div><p>You can see me!</p></div>",
+      "validations": [
+        {
+          "type": "tag",
+          "tag": "p",
+          "found": true,
+          "expectedToPass": true,
+          "passed": true
+        },
+        {
+          "type": "text",
+          "text": "You can see me!",
+          "found": true,
+          "expectedToPass": true,
+          "passed": true
+        },
+        {
+          "type": "propType",
+          "name": "show",
+          "expected": "boolean",
+          "actual": "boolean",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "props": { "show": false },
+      "html": "<div></div>",
+      "validations": [
+        {
+          "type": "tag",
+          "tag": "p",
+          "found": false,
+          "expectedToPass": false,
+          "passed": true
+        },
+        {
+          "type": "text",
+          "text": "You can see me!",
+          "found": false,
+          "expectedToPass": false,
+          "passed": true
+        },
+        {
+          "type": "propType",
+          "name": "show",
+          "expected": "boolean",
+          "actual": "boolean",
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ]
 }
 ```
 
 </details>
 
 ------
-
-## 🚀 Running Locally
-
-```bash
-# install dependencies
-npm install
-
-# start development server
-npm run dev
-
-# or with ts-node
-npx ts-node src/index.ts
-```
-
----
 
 ## 📄 License
 
