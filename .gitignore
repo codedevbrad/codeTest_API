@@ -1,0 +1,2 @@
+# Node modules (ignore in all services)
+node_modules/

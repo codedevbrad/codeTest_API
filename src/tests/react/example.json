@@ -1,0 +1,106 @@
+{
+  "code": "import React from 'react';\n\nexport default function MyButton({ label }) {\n  return <button>{label}</button>;\n}",
+  "tests": {
+    "testCases": [
+      {
+        "props": { "label": "Click me!" },
+        "validations": {
+          "tags": [
+            { "tag": "button", "expectedToPass": true }
+          ],
+          "includesText": [
+            { "text": "Click me!", "expectedToPass": true }
+          ]
+        }
+      },
+      {
+        "props": { "label": "Click" },
+        "validations": {
+          "tags": [
+            { "tag": "button", "expectedToPass": true }
+          ],
+          "includesText": [
+            { "text": "Click me!", "expectedToPass": false }
+          ]
+        }
+      }
+    ],
+    "validations": {
+      "props": [
+        { "name": "label", "type": "string" }
+      ]
+    }
+  }
+}
+
+{
+  "code": "import React from 'react';\n\nexport default function ConditionalMessage({ show }) {\n  return (\n    <div>\n      {show && <p>You can see me!</p>}\n    </div>\n  );\n}",
+  "tests": {
+    "testCases": [
+      {
+        "props": { "show": true },
+        "validations": {
+          "tags": [
+            { "tag": "p", "expectedToPass": true }
+          ],
+          "includesText": [
+            { "text": "You can see me!", "expectedToPass": true }
+          ]
+        }
+      },
+      {
+        "props": { "show": false },
+        "validations": {
+          "tags": [
+            { "tag": "p", "expectedToPass": false }
+          ],
+          "includesText": [
+            { "text": "You can see me!", "expectedToPass": false }
+          ]
+        }
+      }
+    ],
+    "validations": {
+      "props": [
+        { "name": "show", "type": "boolean" }
+      ]
+    }
+  }
+}
+
+{
+  "code": "import React from 'react';\n\nexport default function TodoList({ todos }) {\n  return (\n    <ul>\n      {todos.map((item, index) => (\n        <li key={index}>{item}</li>\n      ))}\n    </ul>\n  );\n}",
+  "tests": {
+    "testCases": [
+      {
+        "props": { "todos": ["Buy milk", "Walk dog"] },
+        "validations": {
+          "tags": [
+            { "tag": "ul", "expectedToPass": true },
+            { "tag": "li", "expectedToPass": true }
+          ],
+          "includesText": [
+            { "text": "Buy milk", "expectedToPass": true },
+            { "text": "Walk dog", "expectedToPass": true }
+          ]
+        }
+      },
+      {
+        "props": { "todos": [] },
+        "validations": {
+          "tags": [
+            { "tag": "li", "expectedToPass": false }
+          ],
+          "includesText": [
+            { "text": "Buy milk", "expectedToPass": false }
+          ]
+        }
+      }
+    ],
+    "validations": {
+      "props": [
+        { "name": "todos", "type": "object" }
+      ]
+    }
+  }
+}
