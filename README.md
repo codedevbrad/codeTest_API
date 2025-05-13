@@ -84,16 +84,57 @@ type ExpectedType =
 
 ```json
 {
-  "code": "function multiply(a, b) { return a * b; }",
-  "tests": [
-    {
-      "args": [
-        { "value": "3", "type": "number" },
-        { "value": "4", "type": "number" }
-      ],
-      "expected": { "value": "12", "type": "number" }
-    }
-  ]
+    "code": "function addNumbers(a, b) {\n  return a + b;\n}",
+    "tests": [
+        {
+            "args": [
+                {
+                    "value": "2",
+                    "type": "number"
+                },
+                {
+                    "value": "3",
+                    "type": "number"
+                }
+            ],
+            "expected": {
+                "value": "5",
+                "type": "number"
+            }
+        },
+        {
+            "args": [
+                {
+                    "value": "-1",
+                    "type": "number"
+                },
+                {
+                    "value": "1",
+                    "type": "number"
+                }
+            ],
+            "expected": {
+                "value": "0",
+                "type": "number"
+            }
+        },
+        {
+            "args": [
+                {
+                    "value": "0",
+                    "type": "number"
+                },
+                {
+                    "value": "0",
+                    "type": "number"
+                }
+            ],
+            "expected": {
+                "value": "0",
+                "type": "number"
+            }
+        }
+    ]
 }
 ```
 
@@ -106,13 +147,68 @@ type ExpectedType =
 ### ✅ Response
 
 ```ts
-interface GradeTestResult {
-  test: string;
-  input: Argument[];
-  expected: Expected;
-  output: any;
-  passed: boolean;
-  error?: string;
+{
+    "success": true,
+    "message": "All tests passed!",
+    "results": [
+        {
+            "test": "Test #1",
+            "input": [
+                {
+                    "value": 2,
+                    "type": "number"
+                },
+                {
+                    "value": 3,
+                    "type": "number"
+                }
+            ],
+            "expected": {
+                "value": 5,
+                "type": "number"
+            },
+            "output": 5,
+            "passed": true
+        },
+        {
+            "test": "Test #2",
+            "input": [
+                {
+                    "value": -1,
+                    "type": "number"
+                },
+                {
+                    "value": 1,
+                    "type": "number"
+                }
+            ],
+            "expected": {
+                "value": 0,
+                "type": "number"
+            },
+            "output": 0,
+            "passed": true
+        },
+        {
+            "test": "Test #3",
+            "input": [
+                {
+                    "value": 0,
+                    "type": "number"
+                },
+                {
+                    "value": 0,
+                    "type": "number"
+                }
+            ],
+            "expected": {
+                "value": 0,
+                "type": "number"
+            },
+            "output": 0,
+            "passed": true
+        }
+    ]
 }
 ```
 
