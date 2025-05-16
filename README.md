@@ -3,8 +3,10 @@
 A sandboxed API system for grading JavaScript functions and React components.
 Designed for use in bootcamps, learning platforms, and automated assessments.
 
----
-
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/a0923fb8-57fa-4f65-9458-7726af44c0ac" />
+</div>
+ 
 ## 📦 Features
 
 * 🔐 Secure VM-based execution
