@@ -6,59 +6,6 @@ import * as babelParser from "@babel/parser"
 import { convertTestCases } from "./utils";
 const router = express.Router();
 
-// {
-//   "code": "function addNumbers(a, b) {\n  return a + b;\n}",
-//   "tests": [
-//       {
-//           "args": [
-//               {
-//                   "value": "2",
-//                   "type": "number"
-//               },
-//               {
-//                   "value": "3",
-//                   "type": "number"
-//               }
-//           ],
-//           "expected": {
-//               "value": "5",
-//               "type": "number"
-//           }
-//       },
-//       {
-//           "args": [
-//               {
-//                   "value": "-1",
-//                   "type": "number"
-//               },
-//               {
-//                   "value": "1",
-//                   "type": "number"
-//               }
-//           ],
-//           "expected": {
-//               "value": "0",
-//               "type": "number"
-//           }
-//       },
-//       {
-//           "args": [
-//               {
-//                   "value": "0",
-//                   "type": "number"
-//               },
-//               {
-//                   "value": "0",
-//                   "type": "number"
-//               }
-//           ],
-//           "expected": {
-//               "value": "0",
-//               "type": "number"
-//           }
-//       }
-//   ]
-// }
 
 router.post("/", async (req: Request<{}, {}, GradeRequestBody>, res: Response<GradeResponse>) => {
     try {
